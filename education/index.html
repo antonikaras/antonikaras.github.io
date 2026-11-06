@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Education · Antonis Karageorgiou</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<dialog id="lightbox">
+  <button type="button" class="lb-close" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" aria-label="Previous photo">‹</button>
+  <img alt="">
+  <button type="button" class="lb-nav lb-next" aria-label="Next photo">›</button>
+  <p class="lb-count"></p>
+</dialog>
+<script>
+  (function () {
+    var dlg = document.getElementById('lightbox');
+    var img = dlg.querySelector('img');
+    var count = dlg.querySelector('.lb-count');
+    var items = [];
+    var index = 0;
+
+    function show(i) {
+      index = (i + items.length) % items.length;
+      img.src = items[index].href;
+      img.alt = items[index].querySelector('img').alt;
+      count.textContent = items.length > 1 ? (index + 1) + ' / ' + items.length : '';
+      dlg.classList.toggle('single', items.length < 2);
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a.thumb');
+      if (a) {
+        e.preventDefault();
+        items = Array.prototype.slice.call(a.closest('.gallery').querySelectorAll('a.thumb'));
+        show(items.indexOf(a));
+        dlg.showModal();
+        return;
+      }
+      if (!dlg.open) return;
+      if (e.target.closest('.lb-prev')) show(index - 1);
+      else if (e.target.closest('.lb-next')) show(index + 1);
+      else if (e.target === dlg || e.target.closest('.lb-close')) dlg.close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!dlg.open || items.length < 2) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+    });
+
+    var startX = null;
+    dlg.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    dlg.addEventListener('touchend', function (e) {
+      if (startX === null || items.length < 2) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+
+    dlg.addEventListener('close', function () { img.removeAttribute('src'); });
+  })();
+</script>
+<script>
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d.matches || !d.matches('details.video-box') || !d.open) return;
+    var f = d.querySelector('iframe[data-src]');
+    if (f) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+  }, true);
+</script>
+
+<body>
+  <header class="wrap">
+    <a class="brand" href="/">Antonis Karageorgiou</a>
+    <nav>
+      
+        <a href="/experience/">Experience</a>
+      
+        <a href="/education/">Education</a>
+      
+        <a href="/projects/">Projects</a>
+      
+        <a href="/hobbies/">Hobbies</a>
+      
+    </nav>
+  </header>
+  <main class="wrap">
+    <h1 id="education">Education</h1>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+    
+    
+    
+    
+
+    <h2 id="education">education</h2>
+    <div class="stack">
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>MSc in Unmanned Aerial Systems Technology</h3>
+  
+  <p class="meta">University of Southern Denmark · 09/2019 - 07/2021</p>
+
+  
+  
+
+  
+    
+  
+
+  <p class="tags"></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>BSc & MEng in Electrical and Computer Engineering</h3>
+  
+  <p class="meta">University of Patras, Greece · 10/2013 - 09/2018</p>
+
+  
+  
+
+  
+    
+  
+
+  <p class="tags"></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+    </div>
+  
+
+
+
+  </main>
+  <footer class="wrap">© 2026 Antonis Karageorgiou</footer>
+</body>
+</html>
