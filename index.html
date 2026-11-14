@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · Antonis Karageorgiou</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<dialog id="lightbox">
+  <button type="button" class="lb-close" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" aria-label="Previous photo">‹</button>
+  <img alt="">
+  <button type="button" class="lb-nav lb-next" aria-label="Next photo">›</button>
+  <p class="lb-count"></p>
+</dialog>
+<script>
+  (function () {
+    var dlg = document.getElementById('lightbox');
+    var img = dlg.querySelector('img');
+    var count = dlg.querySelector('.lb-count');
+    var items = [];
+    var index = 0;
+
+    function show(i) {
+      index = (i + items.length) % items.length;
+      img.src = items[index].href;
+      img.alt = items[index].querySelector('img').alt;
+      count.textContent = items.length > 1 ? (index + 1) + ' / ' + items.length : '';
+      dlg.classList.toggle('single', items.length < 2);
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a.thumb');
+      if (a) {
+        e.preventDefault();
+        items = Array.prototype.slice.call(a.closest('.gallery').querySelectorAll('a.thumb'));
+        show(items.indexOf(a));
+        dlg.showModal();
+        return;
+      }
+      if (!dlg.open) return;
+      if (e.target.closest('.lb-prev')) show(index - 1);
+      else if (e.target.closest('.lb-next')) show(index + 1);
+      else if (e.target === dlg || e.target.closest('.lb-close')) dlg.close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!dlg.open || items.length < 2) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+    });
+
+    var startX = null;
+    dlg.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    dlg.addEventListener('touchend', function (e) {
+      if (startX === null || items.length < 2) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+
+    dlg.addEventListener('close', function () { img.removeAttribute('src'); });
+  })();
+</script>
+<script>
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d.matches || !d.matches('details.video-box') || !d.open) return;
+    var f = d.querySelector('iframe[data-src]');
+    if (f) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+  }, true);
+</script>
+
+<body>
+  <header class="wrap">
+    <a class="brand" href="/">Antonis Karageorgiou</a>
+    <nav>
+      
+        <a href="/experience/">Experience</a>
+      
+        <a href="/education/">Education</a>
+      
+        <a href="/projects/">Projects</a>
+      
+        <a href="/hobbies/">Hobbies</a>
+      
+    </nav>
+  </header>
+  <main class="wrap">
+    <h1 id="hi-im-antony">Hi, I’m Antony</h1>
+
+<p>Robotics engineer working on complex robot systems from Mechanical design to Software development.</p>
+
+<h2 id="featured-projects">Featured projects</h2>
+
+
+
+
+
+<div class="list">
+  
+    
+
+
+
+
+
+<article class="card">
+  <h3>Engineering team management</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2023 - now</p>
+
+  
+  
+    
+    
+      <p>Since joining ROICO full-time, I've managed 14 people on the engineering side, including full-time engineers, interns, and master's thesis students. Their work covered:
+</p>
+    
+  
+
+  
+
+  <p class="tags"><span>Trello</span><span>GitHub Projects</span><span>Agile</span></p>
+
+  
+
+  
+
+  
+</article>
+
+  
+    
+
+
+
+
+
+<article class="card">
+  <h3>In-room autonomous navigation</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2023 - now</p>
+
+  
+  
+    
+    
+      <p>Since 2023, I've been building our in-room navigation system for autonomous wall painting from scratch using Python, C++, ROS2, and Docker.
+</p>
+    
+  
+
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>CMake</span><span>ROS2</span><span>SLAM</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+  
+    
+
+
+
+
+
+<article class="card">
+  <h3>Autonomous painting robot mechanical design</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2022 - now</p>
+
+  
+  
+    
+    
+      <p>Co-Designed the mechanical structure of our painting robot, Bobby, along with several helper components. Our robot design led to an international patent application.
+</p>
+    
+  
+
+  
+
+  <p class="tags"><span>Onshape</span><span>Fusion360</span><span>3D printing</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://patents.google.com/patent/WO2025176826A1/en" target="_blank" rel="noopener noreferrer">Paper ↗</a>
+        
+      
+    
+  </p>
+  
+
+  
+
+  
+</article>
+
+  
+    
+
+
+
+
+
+<article class="card">
+  <h3>Sensor fusion for robot odometry</h3>
+  
+  <p class="meta">ROICO Solutions · 04/2026 - 06/2026</p>
+
+  
+  
+    
+    
+      <p>One big advantage of painting walls with a robot is precise movement, which relies on combining multiple sensors for accurate localization. I worked on fusing data from our LiDARs, IMU, and wheel encoders, getting localization accuracy within 2 cm of our SLAM values at a 50 Hz update rate.
+</p>
+    
+  
+
+  
+
+  <p class="tags"><span>C/C++</span><span>ROS2</span><span>SLAM</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+  
+</div>
+
+
+  </main>
+  <footer class="wrap">© 2026 Antonis Karageorgiou</footer>
+</body>
+</html>

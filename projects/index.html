@@ -1,0 +1,1210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Antonis Karageorgiou</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<dialog id="lightbox">
+  <button type="button" class="lb-close" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" aria-label="Previous photo">‹</button>
+  <img alt="">
+  <button type="button" class="lb-nav lb-next" aria-label="Next photo">›</button>
+  <p class="lb-count"></p>
+</dialog>
+<script>
+  (function () {
+    var dlg = document.getElementById('lightbox');
+    var img = dlg.querySelector('img');
+    var count = dlg.querySelector('.lb-count');
+    var items = [];
+    var index = 0;
+
+    function show(i) {
+      index = (i + items.length) % items.length;
+      img.src = items[index].href;
+      img.alt = items[index].querySelector('img').alt;
+      count.textContent = items.length > 1 ? (index + 1) + ' / ' + items.length : '';
+      dlg.classList.toggle('single', items.length < 2);
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a.thumb');
+      if (a) {
+        e.preventDefault();
+        items = Array.prototype.slice.call(a.closest('.gallery').querySelectorAll('a.thumb'));
+        show(items.indexOf(a));
+        dlg.showModal();
+        return;
+      }
+      if (!dlg.open) return;
+      if (e.target.closest('.lb-prev')) show(index - 1);
+      else if (e.target.closest('.lb-next')) show(index + 1);
+      else if (e.target === dlg || e.target.closest('.lb-close')) dlg.close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!dlg.open || items.length < 2) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+    });
+
+    var startX = null;
+    dlg.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    dlg.addEventListener('touchend', function (e) {
+      if (startX === null || items.length < 2) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+
+    dlg.addEventListener('close', function () { img.removeAttribute('src'); });
+  })();
+</script>
+<script>
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d.matches || !d.matches('details.video-box') || !d.open) return;
+    var f = d.querySelector('iframe[data-src]');
+    if (f) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+  }, true);
+</script>
+
+<body>
+  <header class="wrap">
+    <a class="brand" href="/">Antonis Karageorgiou</a>
+    <nav>
+      
+        <a href="/experience/">Experience</a>
+      
+        <a href="/education/">Education</a>
+      
+        <a href="/projects/">Projects</a>
+      
+        <a href="/hobbies/">Hobbies</a>
+      
+    </nav>
+  </header>
+  <main class="wrap">
+    <h1 id="projects">Projects</h1>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+    
+    
+    
+    
+
+    <h2 id="roico-projects">ROICO</h2>
+    <div class="stack">
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Git reminder Slack bot</h3>
+  
+  <p class="meta">ROICO Solutions · 10/2026 - now</p>
+
+  
+  
+    
+    
+      <p>I would sometimes forget to commit and push my working code to GitHub at the end of the day or after finishing a feature. To fix that, I built a small Slack bot that sends a reminder at the end of the day and week with a list of repositories I worked on but forgot to push.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>Slack API</span><span>Git</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>AI advisory board</h3>
+  
+  <p class="meta">ROICO Solutions · 09/2026 - now</p>
+
+  
+  
+    
+    
+      <p>Using our Google Cloud startup resources, I started building an internal AI advisory board. You pose a question, and several agents with different personas debate each other like a real advisory board before proposing a direction or answer. The personas can ask questions before or after the debate to improve their output. The system is still in early development, but it has already been useful for internal decision-making and brainstorming.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>Google Cloud</span><span>Vertex AI</span><span>Docker</span><span>PostgreSQL</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Cloud setup and internal AI tools (AWS & Google Cloud)</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2026 - now</p>
+
+  
+  
+    
+    
+      <p>Through the Nvidia Inception program for startups, we received cloud credits for AWS and Google Cloud. I set up both platforms for internal use and built our tooling around them:
+</p>
+    
+  
+
+  
+    
+      <ul class="summary"><li>Set up AWS Bedrock and Google Vertex AI for coding with LLMs, and built internal AI tools to speed up our daily workflow</li><li>Configured per-user usage alerts and spending failsafes so we wouldn't exceed our startup credits</li><li>I was aworded Google Skills credits to expand my hands-on experience in AI and cloud engineering</li></ul>
+    
+  
+
+  <p class="tags"><span>Python</span><span>AWS</span><span>Google Cloud</span><span>Vertex AI</span><span>AWS Bedrock</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Robot-to-server database and sync system</h3>
+  
+  <p class="meta">ROICO Solutions · 01/2026 - now</p>
+
+  
+  
+    
+    
+      <p>Our robot generates a lot of operational data that we record to evaluate and improve performance. I built a SQL-based logging and sync pipeline between the robot and our office server.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>SQL</span><span>SQLite</span><span>PostgreSQL</span><span>FastAPI</span><span>Cloudflare</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Agentic developer tooling and self-hosted AI workflows</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2025 - now</p>
+
+  
+  
+    
+    
+      <p>Integrated agentic coding assistants and self-hosted LLMs into engineering workflows. Configured and directed agent execution pipelines using antigravity-cli, Claude, opencode, and aider. Authored structured agent definitions (agent.md) and tool specifications (skills.md) to automate complex code refactoring, implementation, and verification tasks.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>antigravity-cli</span><span>Claude</span><span>aider</span><span>opencode</span><span>Ollama</span><span>Python</span><span>Git</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Embedded programming and motor control</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2024 - now</p>
+
+  
+  
+    
+    
+      <p>Our robot uses several microcontrollers to talk to sensors, actuators, and ESCs. I wrote the libraries that handle motor control and link those microcontrollers to the main onboard PC, including:
+</p>
+    
+  
+
+  
+    
+      <ul class="summary"><li>A micro-ROS library connecting the different microcontrollers on the robot to the main PC</li><li>A CAN bus library for communication between the microcontrollers and the motor ESCs</li><li>A position controller for smooth motor control through the ESCs</li><li>Calibration and tuning routines for the ESCs</li></ul>
+    
+  
+
+  <p class="tags"><span>C/C++</span><span>CMake</span><span>ROS2</span><span>micro-ROS</span><span>PlatformIO</span><span>CAN bus</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Camera-based obstacle avoidance</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2024 - now</p>
+
+  
+  
+    
+    
+      <p>In 2025, one of our engineers built an initial obstacle detection system using the robot's onboard cameras. After his project wrapped up, I took over maintaining and improving his perception work and built the robot's obstacle avoidance system around it.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>C/C++</span><span>OpenCV</span><span>ROS2</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Robot DevOps and deployment setup</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2024 - now</p>
+
+  
+  
+    
+    
+      <p>As our codebase, robot features, and developer team grew, I set up our DevOps workflow so code runs in the same environment across developer machines and the robots:
+</p>
+    
+  
+
+  
+    
+      <ul class="summary"><li>Dockerized the software stack so code runs identically across all robots and developer laptops</li><li>Set up a private Docker registry so we can push remote updates whenever a robot is connected to the internet</li><li>Configured systemd services to start all robot software components automatically on boot once hardware interfaces are ready</li><li>Built automatic versioning for individual ROS2 packages and the full system using Git hooks and GitHub Actions</li></ul>
+    
+  
+
+  <p class="tags"><span>GitHub Actions</span><span>Docker</span><span>Python</span><span>Git</span><span>ROS2</span><span>Linux</span><span>systemd</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>In-room autonomous navigation</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2023 - now</p>
+
+  
+  
+    
+    
+      <p>Since 2023, I've been building our in-room navigation system for autonomous wall painting from scratch using Python, C++, ROS2, and Docker.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>CMake</span><span>ROS2</span><span>SLAM</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Engineering team management</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2023 - now</p>
+
+  
+  
+    
+    
+      <p>Since joining ROICO full-time, I've managed 14 people on the engineering side, including full-time engineers, interns, and master's thesis students. Their work covered:
+</p>
+    
+  
+
+  
+    
+      <ul class="summary"><li>Software development for the robot's autonomous navigation</li><li>Mechanical design, assembly, and testing of new components</li><li>Embedded systems and electronics for the onboard microcontrollers</li><li>Computer vision for the obstacle avoidance system</li></ul>
+    
+  
+
+  <p class="tags"><span>Trello</span><span>GitHub Projects</span><span>Agile</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Autonomous painting robot mechanical design</h3>
+  
+  <p class="meta">ROICO Solutions · 08/2022 - now</p>
+
+  
+  
+    
+    
+      <p>Co-Designed the mechanical structure of our painting robot, Bobby, along with several helper components. Our robot design led to an international patent application.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Onshape</span><span>Fusion360</span><span>3D printing</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://patents.google.com/patent/WO2025176826A1/en" target="_blank" rel="noopener noreferrer">Paper ↗</a>
+        
+      
+    
+  </p>
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Local LLMs for codebase documentation</h3>
+  
+  <p class="meta">ROICO Solutions · 03/2026 - 10/2026</p>
+
+  
+  
+    
+    
+      <p>We had an office server with an Nvidia GPU, so I experimented with running local open-source LLMs (using Ollama, LiteLLM, and Qwen) to cut API costs and keep our codebase private. The local models weren't fast or strong enough to replace commercial tools for day-to-day coding, but it was a great learning process and we ended up using the self-hosted setup to run an agent that generates codebase documentation without sending our code to external providers.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Docker</span><span>Ollama</span><span>LiteLLM</span><span>Qwen</span><span>Python</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>ROS2 system watchdog</h3>
+  
+  <p class="meta">ROICO Solutions · 05/2026 - 09/2026</p>
+
+  
+  
+    
+    
+      <p>As our robot grew more complex and we spent more time on-site with customers, we needed a way to catch software or hardware issues early. I built a ROS2 watchdog that monitors critical components and sends notifications to our mobile app when something isn't working as expected.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>ROS2</span><span>C/C++</span><span>Python</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Interfacing with industrial painting equipment</h3>
+  
+  <p class="meta">ROICO Solutions · 03/2024 - 07/2026</p>
+
+  
+  
+    
+    
+      <p>Newer spray pumps and spray guns include digital interfaces for control and status data. Using the manufacturer documentation and APIs, I connected the painting equipment to our robot over CAN bus and Bluetooth so we could control it and read data directly from software.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>Bluetooth</span><span>CAN bus</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Sensor fusion for robot odometry</h3>
+  
+  <p class="meta">ROICO Solutions · 04/2026 - 06/2026</p>
+
+  
+  
+    
+    
+      <p>One big advantage of painting walls with a robot is precise movement, which relies on combining multiple sensors for accurate localization. I worked on fusing data from our LiDARs, IMU, and wheel encoders, getting localization accuracy within 2 cm of our SLAM values at a 50 Hz update rate.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>C/C++</span><span>ROS2</span><span>SLAM</span><span>Docker</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Compliant sanding attachment (TRL 4)</h3>
+  
+  <p class="meta">ROICO Solutions · 05/2025 - 05/2026</p>
+
+  
+  
+    
+    
+      <p>In one of our research projects, we developed a TRL 4 prototype of a wall-sanding module for our robot. I designed the compliant sanding machine mount that keeps the sander pressed evenly against the wall.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Onshape</span><span>3D printing</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+    </div>
+  
+
+  
+  
+  
+    
+    
+    
+    
+    
+
+    <h2 id="blue-atlas-robotics-projects">Blue Atlas Robotics</h2>
+    <div class="stack">
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Migrate codebase to ROS2</h3>
+  
+  <p class="meta">Blue Atlas Robotics · 02/2022 - 07/2023</p>
+
+  
+  
+    
+    
+      <p>Migrated the software running on the robot from a custom proprietary protocol over to ROS2, making the codebase much easier to maintain and extend.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>ROS2</span><span>OpenCV</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Packaging ROS2 nodes into Debian releases</h3>
+  
+  <p class="meta">Blue Atlas Robotics · 02/2022 - 07/2023</p>
+
+  
+  
+    
+    
+      <p>Built a release system that packages our Python and C++ ROS2 nodes into Debian (.deb) packages for straightforward installation and field updates.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>ROS2</span><span>CMake</span><span>Debian</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Nvidia Jetson Xavier bring-up and setup</h3>
+  
+  <p class="meta">Blue Atlas Robotics · 02/2022 - 07/2023</p>
+
+  
+  
+    
+    
+      <p>Assembled the Nvidia Jetson Xavier units for our ROVs, flashed them with JetPack, and verified that all hardware and camera interfaces worked properly before deployment.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Nvidia Jetson Xavier</span><span>JetPack</span><span>Linux</span><span>Bash</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Pixhawk and ArduSub customization</h3>
+  
+  <p class="meta">Blue Atlas Robotics · 02/2022 - 07/2023</p>
+
+  
+  
+    
+    
+      <p>Modified and tuned ArduSub running on our Pixhawk flight controllers to improve the robot's handling, then tested the new setup in our indoor water tank.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Pixhawk</span><span>ArduSub</span><span>C/C++</span><span>CMake</span><span>QGroundControl</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Technical support on client demos and sales</h3>
+  
+  <p class="meta">Blue Atlas Robotics · 02/2022 - 07/2023</p>
+
+  
+  
+    
+    
+      <p>Joined our ROV pilot on client demos and sales trips to handle the technical side and troubleshoot on the spot if the robot wasn't performing as expected.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>Linux</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+    </div>
+  
+
+  
+  
+  
+    
+    
+    
+    
+    
+
+    <h2 id="sdu-projects">SDU</h2>
+    <div class="stack">
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Exploration and interaction with factory layouts using mobile platforms</h3>
+  
+  <p class="meta">University of Southern Denmark · 09/2020 - 05/2021</p>
+
+  
+  
+    
+    
+      <p>For my Msc thesis I had to use a mobile robot to autonomously explore and generate the map of an area. Then use the Unity game engine to post‐process the map by defining interactive areas, e.g. pick and place locations, doors, and charging stations.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>ROS2</span><span>Docker</span><span>Nav2</span><span>Unity</span><span>C#</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://github.com/antonikaras/thesis_docker" target="_blank" rel="noopener noreferrer">Repo ↗</a>
+        
+      
+    
+      
+        
+      
+    
+  </p>
+  
+
+  
+  <details class="video-box" ontoggle="if(this.open){var f=this.querySelector('iframe[data-src]');if(f){f.src=f.dataset.src;f.removeAttribute('data-src');}}">
+    <summary>Watch video</summary>
+    
+    <iframe class="video" data-src="https://www.youtube-nocookie.com/embed/qpvsgCzYTwA"
+            title="Exploration and interaction with factory layouts using mobile platforms video" allowfullscreen></iframe>
+    
+  </details>
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Expert in Teams - Autonomous drone fence inspection</h3>
+  
+  <p class="meta">University of Southern Denmark · 09/2020 - 12/2020</p>
+
+  
+  
+    
+    
+      <p>Develop an autonomous drone-based solution together with a Drone company in Odense in order to inspect fences in critical infrastructures, e.g. airports. This was a group project of 5 Engineering Students. My main tasks were :
+</p>
+    
+  
+
+  
+    
+      <ul class="summary"><li>Create simulation environment in Gazebo</li><li>Detection of the fence using an RGBD camera</li><li>Autonomous fence following using PX4's offboard mode</li></ul>
+    
+  
+
+  <p class="tags"><span>Python</span><span>ROS</span><span>OpenCV</span><span>Docker</span><span>PX4</span><span>Raspberry Pi</span></p>
+
+  
+
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>UAV vision based landing</h3>
+  
+  <p class="meta">University of Southern Denmark · 04/2020 - 05/2020</p>
+
+  
+  
+    
+    
+      <p>Simulate a drone running PX4 using Software In The Loop and perform an autonomous landing on top of an ArUCO marker.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>ROS</span><span>OpenCV</span><span>Docker</span><span>PX4</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://github.com/antonikaras/uav_mavros_simulation" target="_blank" rel="noopener noreferrer">Repo ↗</a>
+        
+      
+    
+      
+        
+      
+    
+  </p>
+  
+
+  
+  <details class="video-box" ontoggle="if(this.open){var f=this.querySelector('iframe[data-src]');if(f){f.src=f.dataset.src;f.removeAttribute('data-src');}}">
+    <summary>Watch video</summary>
+    
+    <iframe class="video" data-src="https://www.youtube-nocookie.com/embed/k1WqiE6d8TA"
+            title="UAV vision based landing video" allowfullscreen></iframe>
+    
+  </details>
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Intelligent Collaborative Drone System for Cable Detection</h3>
+  
+  <p class="meta">University of Southern Denmark · 02/2020 - 05/2020</p>
+
+  
+  
+    
+    
+      <p>Simulate two drones running PX4 using Software In The Loop and use them in a Master/Slave configuration in order to inspect power cables between pylons. Using two LiDARs the master UAV aligns with the cable and then sends the alignment coordinates to the slave. 
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>ROS</span><span>OpenCV</span><span>Docker</span><span>PX4</span><span>Simulink</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://github.com/antonikaras/drone_cable_detection" target="_blank" rel="noopener noreferrer">Repo ↗</a>
+        
+      
+    
+      
+        
+      
+    
+  </p>
+  
+
+  
+  <details class="video-box" ontoggle="if(this.open){var f=this.querySelector('iframe[data-src]');if(f){f.src=f.dataset.src;f.removeAttribute('data-src');}}">
+    <summary>Watch video</summary>
+    
+    <iframe class="video" data-src="https://www.youtube-nocookie.com/embed/MYW7WCP0Eoc"
+            title="Intelligent Collaborative Drone System for Cable Detection video" allowfullscreen></iframe>
+    
+  </details>
+  
+
+  
+</article>
+
+      
+    </div>
+  
+
+  
+  
+  
+    
+    
+    
+    
+    
+
+    <h2 id="university-of-patras-projects">University of Patras</h2>
+    <div class="stack">
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>Real-time traffic lane and sign recognition system</h3>
+  
+  <p class="meta">University of Patras · 09/2016 - 06/2018</p>
+
+  
+  
+    
+    
+      <p>For my diploma thesis, we built a real-time computer vision system that detects traffic lanes and road signs to alert the driver. It warns the driver when the car drifts from the center of the lane. I compared different approaches for detecting and recognizing road signs, such as feature matching(SIFT, SURF), and machine learning based, SVM. The system was developed in both C++ and Python to evaluate the performance difference between the two languages. Built with OpenCV so it can run easily on embedded hardware, the system also connects to the car's CAN bus via the OBD-II port to display live vehicle data like speed and RPM.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>Python</span><span>C/C++</span><span>OpenCV</span><span>SVM</span><span>CAN bus</span><span>Raspberry Pi</span><span>OBD-II</span></p>
+
+  
+  <p class="links">
+    
+      
+        
+          <a href="https://github.com/antonikaras/Traffic-Lane-and-Sign-Recognition-System" target="_blank" rel="noopener noreferrer">Repo ↗</a>
+        
+      
+    
+      
+        
+      
+    
+  </p>
+  
+
+  
+  <details class="video-box" ontoggle="if(this.open){var f=this.querySelector('iframe[data-src]');if(f){f.src=f.dataset.src;f.removeAttribute('data-src');}}">
+    <summary>Watch video</summary>
+    
+    <iframe class="video" data-src="https://www.youtube-nocookie.com/embed/EJrsVlQcJq4"
+            title="Real-time traffic lane and sign recognition system video" allowfullscreen></iframe>
+    
+  </details>
+  
+
+  
+</article>
+
+      
+        
+
+
+
+
+
+<article class="card">
+  <h3>5-DoF robotic arm using LEGO Technic, Arduino Uno, and LabVIEW</h3>
+  
+  <p class="meta">University of Patras · 11/2017 - 12/2017</p>
+
+  
+  
+    
+    
+      <p>Built a 5-DoF robotic arm out of standard LEGO Technic bricks, using two Arduino Unos to drive the motors and LabVIEW for the control algorithm.
+</p>
+    
+  
+
+  
+    
+  
+
+  <p class="tags"><span>LabVIEW</span><span>C/C++</span><span>LEGO Technic</span><span>Arduino</span></p>
+
+  
+
+  
+
+  
+  <div class="gallery">
+    
+    <a class="thumb" href="/assets/media/lego_robotic_arm/20171217_104708.jpg">
+      <img src="/assets/media/lego_robotic_arm/20171217_104708.jpg" alt="5-DoF robotic arm using LEGO Technic, Arduino Uno, and LabVIEW, photo 1" loading="lazy">
+    </a>
+    
+    <a class="thumb" href="/assets/media/lego_robotic_arm/20171217_104732.jpg">
+      <img src="/assets/media/lego_robotic_arm/20171217_104732.jpg" alt="5-DoF robotic arm using LEGO Technic, Arduino Uno, and LabVIEW, photo 2" loading="lazy">
+    </a>
+    
+    <a class="thumb" href="/assets/media/lego_robotic_arm/20171217_121708.jpg">
+      <img src="/assets/media/lego_robotic_arm/20171217_121708.jpg" alt="5-DoF robotic arm using LEGO Technic, Arduino Uno, and LabVIEW, photo 3" loading="lazy">
+    </a>
+    
+  </div>
+  
+</article>
+
+      
+    </div>
+  
+
+
+
+  </main>
+  <footer class="wrap">© 2026 Antonis Karageorgiou</footer>
+</body>
+</html>
